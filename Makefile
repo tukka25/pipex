@@ -1,7 +1,8 @@
 NAME = pipex
 
-SRCS =	pipex.c   \
-		parsing.c 
+SRCS =	pipex.c       \
+		parsing.c     \
+		parsing2.c    \
 
 OBJS = $(SRCS:.c=.o)
 

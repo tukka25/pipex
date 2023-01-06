@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 17:29:18 by abdamoha          #+#    #+#             */
-/*   Updated: 2022/12/31 16:23:16 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/06 18:18:13 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	parsing(int ac, char *av[])
 {
 	int	i;
 	int	j;
-	int d;
+	int	d;
 
 	i = 2;
 	j = 0;
@@ -33,7 +33,6 @@ int	parsing(int ac, char *av[])
 			}
 			while (av[i][j] != '\0' && i < 4)
 			{
-				// ft_printf("av[i] = %c\n", av[i][j]);
 				if (!((av[i][j] >= 'a' && av[i][j] <= 'z') || (av[i][j] >= 'A' && av[i][j] <= 'Z')) && (av[i][j] != ' ' || av[i][j] != '\t'))
 				{
 					ft_printf("Error");
@@ -42,11 +41,8 @@ int	parsing(int ac, char *av[])
 				}
 				j++;
 			}
-			// if (av[i][j] == '\0' && av[i][j + 1])
-			// 	j++;
 			i++;
 		}
-		// ft_printf("success");
 		return (1);
 	}
 	else
@@ -94,4 +90,49 @@ int	second_file_parsing(int ac, char *av[])
 			return (1);
 	}
 	return (1);
+}
+
+char	*check_env_for_path(char **env)
+{
+	int		i;
+	int		j;
+
+	j = 0;
+	i = 0;
+	while (env[i] != NULL)
+	{
+		if (env[i][j] == 'P' && env[i][j + 1] == 'A' && env[i][j + 2] == 'T' && env[i][j + 3] == 'H')
+			return (&env[i][5]);
+		i++;
+	}
+	return (NULL);
+}
+
+char	*check_command_existence(char *av[], char **s)
+{
+	int		i;
+	char	*str;
+	int		j;
+
+	j = 0;
+	i = ft_strlen(av[2]);
+	str = malloc(i + 2);
+	str[0] = '/';
+	i = 1;
+	while (av[2][j] != '\0')
+	{
+		str[i] = av[2][j];
+		j++;
+		i++;
+	}
+	str[i] = '\0';
+	// ft_printf("str11 = %s\n", str);
+	i = 0;
+	while (s[i] != NULL)
+	{
+		if (access(ft_strjoin(s[i], str), 0) != -1)
+			return (s[i]);
+		i++;
+	}
+	return (NULL);
 }
