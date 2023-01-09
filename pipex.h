@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 18:21:26 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/09 21:11:08 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/10 02:31:28 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int		second_file_parsing(int ac, char *av[]);
 char	*check_env_for_path(char **env);
 char	*check_command_existence(char *av, char **env);
 char	**parsing_main_part(int ac, char *av[], char **env);
-char	*check_flags(char *cmd1, char *cmd2, char *cmd_path, char **sub_path);
+char	*check_flags(char *cmd1, char *cmd2, char **cmd_path);
 
 #endif

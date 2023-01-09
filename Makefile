@@ -1,14 +1,14 @@
 NAME = pipex
 
-SRCS =	pipex.c       \
-		parsing.c     \
-		parsing2.c    \
+SRCS =	pipex.c             \
+		parsing.c           \
+		parsing2.c          \
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS =  -g -fsanitize=address -Wall -Wextra -Werror 
+CFLAGS = -g3 -Wall -Wextra -Werror 
 
 all:$(NAME)
 

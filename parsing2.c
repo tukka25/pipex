@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 16:40:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/09 21:18:01 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/10 02:35:26 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,18 @@ char	**parsing_main_part(int ac, char *av[], char **env)
 	return (str);
 }
 
-char	*check_flags(char *cmd1, char *cmd2, char *cmd_path, char **sub_path)
+char	*check_flags(char *cmd1, char *cmd2, char **cmd_path)
 {
-	int		i;
+	// int		i;
 	char	**splited_cmd1;
 	char	**splited_cmd2;
-	char	*cmd_path2;
 	int		file1;
 	// char	*str;
 	int		pid;
 
-	i = 0;
+	// i = 0;
 	splited_cmd1 = ft_split(cmd1, ' ');
-	cmd_path2 = check_command_existence(cmd2, sub_path);
-	// ft_printf("c2 = %s", cmd_path2);
+	// ft_printf("c2 = %s", cmd_path[0]);
 	splited_cmd2 = ft_split(cmd2, ' ');
 	file1 = open("file1.txt", O_WRONLY | O_RDONLY | O_CREAT, 0777);
 	if (file1 == -1)
@@ -60,14 +58,14 @@ char	*check_flags(char *cmd1, char *cmd2, char *cmd_path, char **sub_path)
 	{
 		dup2(file1, STDOUT_FILENO);
 		close(file1);
-		if (execve(cmd_path, splited_cmd1, NULL) != -1)
-			exit (0);
+		if (execve(cmd_path[0], splited_cmd1, NULL) != -1)
+			return (0);
 	}
 	else
 	{
-		// read("file.txt", join, sizeof(char));
-		if (execve(cmd_path2, splited_cmd2, NULL) != -1)
-			exit(0);
+		close(file1);
+		if (execve(cmd_path[1], splited_cmd2, NULL) != -1)
+			return (0);
 		sleep(1);
 	}
 	return (NULL);
