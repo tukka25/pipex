@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 17:29:18 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/09 15:12:05 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:10:53 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,9 @@ char	*check_command_existence(char *av, char **path)
 	{
 		join = ft_strjoin(path[i], str);
 		if (access(join, 0) != -1)
-		{
 			return (join);
-		}
 		i++;
+		free(join);
 	}
-	// check_flags(av, path);
 	return (NULL);
 }

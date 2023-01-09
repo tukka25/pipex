@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 18:50:34 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/09 15:36:53 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:10:34 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 int	main(int ac, char *av[], char **env)
 {
 	int		i;
+	int		j;
 	char	*str;
 	char	**sub_path;
 
 	i = 2;
+	j = 0;
 	// printf("av = %s", av[2]);
+	// check_flags("ls ", "/bin/ls");
+	// exit(0);
 	sub_path = parsing_main_part(ac, av, env);
 	if (sub_path)
 	{
@@ -32,9 +36,9 @@ int	main(int ac, char *av[], char **env)
 				return (0);
 			}
 			i++;
+			j++;
 		}
-		printf("av = %s", av[2]);
-		check_flags(av[2], str);
+		check_flags(av[2], av[3], str, sub_path);
 	}
 	else
 		return (0);
