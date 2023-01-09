@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 18:21:26 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/06 17:50:15 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:15:50 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 # include <fcntl.h>
 
 int		ft_printf(const char *str, ...);
-int		parsing(int ac, char *av[]);
+int		parsing(int ac);
 int		first_file_parsing(int ac, char *av[]);
 int		second_file_parsing(int ac, char *av[]);
 char	*check_env_for_path(char **env);
-char	*check_command_existence(char *av[], char **env);
+char	*check_command_existence(char *av, char **env);
 char	**parsing_main_part(int ac, char *av[], char **env);
+char	*check_flags(char *av, char *cmd_path);
 
 #endif

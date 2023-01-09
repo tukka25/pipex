@@ -1,22 +1,22 @@
-// #include "pipex.h"
+#include "pipex.h"
 #include <stdio.h>
 #include <stdlib.h>
 int main()
 {
 	char	*str;
 	char *s;
-	int i;
-	i = 0;
-	printf("type ");
-	scanf("%s", str);
-	while (str[i] != '\0')
-		i++;
-	i = 0;
-	s = malloc(i * sizeof(char));
-	while(str[i] != '\0')
+	int pid;
+
+	pid = fork();
+	if (pid == 0)
 	{
-		s[i] = str[i];
-		i++;
+		int file = open("file1.txt", O_WRONLY | O_CREAT, 0777);
+		if (file == -1)
+		{
+			printf("wrong");
+			return (0);
+		}
+		int file2 = dup2(file, 1);
+		printf("my name is tukka");
 	}
-	printf("str = %s", s);
 }

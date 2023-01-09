@@ -6,48 +6,19 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 17:29:18 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/06 18:18:13 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:12:05 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	parsing(int ac, char *av[])
+int	parsing(int ac)
 {
-	int	i;
-	int	j;
-	int	d;
-
-	i = 2;
-	j = 0;
-	d = 0;
 	if (ac == 5)
-	{
-		while (av[i] != NULL && i < 4)
-		{
-			j = 0;
-			if (!av[i][j])
-			{
-				ft_printf("Error");
-				return (0);
-			}
-			while (av[i][j] != '\0' && i < 4)
-			{
-				if (!((av[i][j] >= 'a' && av[i][j] <= 'z') || (av[i][j] >= 'A' && av[i][j] <= 'Z')) && (av[i][j] != ' ' || av[i][j] != '\t'))
-				{
-					ft_printf("Error");
-					d++;
-					return (0);
-				}
-				j++;
-			}
-			i++;
-		}
 		return (1);
-	}
 	else
 	{
-		ft_printf("Error");
+		write(2, "Error\n", 6);
 		return (0);
 	}
 }
@@ -101,38 +72,42 @@ char	*check_env_for_path(char **env)
 	i = 0;
 	while (env[i] != NULL)
 	{
-		if (env[i][j] == 'P' && env[i][j + 1] == 'A' && env[i][j + 2] == 'T' && env[i][j + 3] == 'H')
+		if (ft_strncmp("PATH=", env[i], 5) == 0)
 			return (&env[i][5]);
 		i++;
 	}
 	return (NULL);
 }
 
-char	*check_command_existence(char *av[], char **s)
+char	*check_command_existence(char *av, char **path)
 {
 	int		i;
 	char	*str;
+	char	*join;
 	int		j;
 
 	j = 0;
-	i = ft_strlen(av[2]);
+	i = ft_strlen(av);
 	str = malloc(i + 2);
 	str[0] = '/';
 	i = 1;
-	while (av[2][j] != '\0')
+	while (av[j] != '\0' && av[i - 1] != ' ')
 	{
-		str[i] = av[2][j];
+		str[i] = av[j];
 		j++;
 		i++;
 	}
 	str[i] = '\0';
-	// ft_printf("str11 = %s\n", str);
 	i = 0;
-	while (s[i] != NULL)
+	while (path[i] != NULL)
 	{
-		if (access(ft_strjoin(s[i], str), 0) != -1)
-			return (s[i]);
+		join = ft_strjoin(path[i], str);
+		if (access(join, 0) != -1)
+		{
+			return (join);
+		}
 		i++;
 	}
+	// check_flags(av, path);
 	return (NULL);
 }
