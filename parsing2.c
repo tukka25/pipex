@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 16:40:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/10 02:35:26 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/11 02:06:01 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,41 +39,56 @@ char	**parsing_main_part(int ac, char *av[], char **env)
 
 char	*check_flags(char *cmd1, char *cmd2, char **cmd_path)
 {
-	// int		i;
+	int		pid_cmd2;
 	char	**splited_cmd1;
 	char	**splited_cmd2;
-	int		file1;
-	// char	*str;
-	int		pid;
+	int		fd[2];
+	int		pid_cmd1;
 
 	// i = 0;
 	splited_cmd1 = ft_split(cmd1, ' ');
-	// ft_printf("c2 = %s", cmd_path[0]);
 	splited_cmd2 = ft_split(cmd2, ' ');
-	file1 = open("file1.txt", O_WRONLY | O_RDONLY | O_CREAT, 0777);
-	if (file1 == -1)
+	fd[1] = open("file1.txt", O_WRONLY | O_RDONLY | O_CREAT | O_TRUNC, 0777);
+	fd[0] = open("outfile.txt", O_WRONLY | O_RDONLY | O_CREAT | O_TRUNC, 0777);
+	pipe(fd);
+	if (fd[1] == -1)
 		return (0);
-	pid = fork();
-	if (pid == 0)
+	pid_cmd1 = fork();
+	if (pid_cmd1 == 0)
 	{
-		dup2(file1, STDOUT_FILENO);
-		close(file1);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
+		close(fd[1]);
 		if (execve(cmd_path[0], splited_cmd1, NULL) != -1)
 			return (0);
 	}
-	else
+	pid_cmd2 = fork();
+	if (pid_cmd2 == 0)
 	{
-		close(file1);
+		// dup2(fd[0], STDOUT_FILENO);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+		// sleep(3);
 		if (execve(cmd_path[1], splited_cmd2, NULL) != -1)
 			return (0);
-		sleep(1);
 	}
+	close(fd[1]);
+	close(fd[0]);
+	waitpid(pid_cmd1, NULL, 0);
+	waitpid(pid_cmd2, NULL, 0);
 	return (NULL);
 }
 
-// int main(int ac, char *av[])
-// {
-// 	int		i;
+void	free_strings(char **str)
+{
+	int		i;
 
-// 	printf("s = %s\n", check_flags(av, )
-// }
+	i = 0;
+	while (str[i] != NULL)
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}

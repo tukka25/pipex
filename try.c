@@ -7,10 +7,10 @@ int main()
 	char *s;
 	int pid;
 
+		int f1 = open("file1.txt", O_WRONLY | O_CREAT, 0777);
 	pid = fork();
 	if (pid == 0)
 	{
-		int file = open("file1.txt", O_WRONLY | O_CREAT, 0777);
 		if (file == -1)
 		{
 			printf("wrong");
