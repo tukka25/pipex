@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 18:50:34 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/13 20:36:12 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/14 21:26:00 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ int	main(int ac, char *av[], char **env)
 	if (sub_path != NULL)
 	{
 		tmp = checking_loop(sub_path, str, av, tmp);
-		check_flags(av[2], av[3], tmp, av, env);
-		free_strings(tmp);
-		free_strings(sub_path);
+		check_flags(av[2], av[3], tmp, av);
 	}
 	else
-		return (free(tmp), 0);
+		return (free(tmp), free(sub_path), 0);
 }
 
 char	**checking_loop(char **sub_path, char *str, char *av[], char **tmp)
@@ -43,12 +41,15 @@ char	**checking_loop(char **sub_path, char *str, char *av[], char **tmp)
 	{
 		str = check_command_existence(av[i], sub_path);
 		if (str == NULL)
-			ft_printf("%s: command not found\n", av[1]);
+		{
+			ft_printf("%s: command not found\n", av[i]);
+		}
 		tmp[j] = ft_strdup(str);
 		free(str);
 		i++;
 		j++;
 	}
 	tmp[j] = NULL;
+	free_strings(sub_path);
 	return (tmp);
 }

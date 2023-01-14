@@ -6,16 +6,23 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 17:29:18 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/13 22:42:20 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/14 23:03:53 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	parsing(int ac)
+int	parsing(int ac, char *av[])
 {
 	if (ac == 5)
+	{
+		if (av[2][0] == '\0' || av[3][0] == '\0')
+		{
+			ft_printf(" %s: command not found", av[2]);
+			return (0);
+		}
 		return (1);
+	}
 	else
 	{
 		write(2, "Error\n", 6);
@@ -85,6 +92,10 @@ char	*check_command_existence(char *av, char **path)
 
 	j = 0;
 	i = ft_strlen(av);
+	if (ft_strchr(av, '/') != NULL)
+	{
+		return (backslash_case(av, i));
+	}
 	str = malloc(i + 2);
 	str[0] = '/';
 	i = 1;
