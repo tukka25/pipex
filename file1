@@ -1,18 +1,2 @@
-Makefile
-a.out
-file1
-file1.txt
-file2
-file2.txt
-libft
-outfile
-outfile.txt
-parsing.c
-parsing.o
-parsing2.c
-parsing2.o
-pipex
-pipex.c
-pipex.h
-pipex.o
-try.c
+ 14:05:58 up 10 min,  0 users,  load average: 0.04, 0.05, 0.04
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT

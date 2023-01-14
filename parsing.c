@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 17:29:18 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/11 01:43:33 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:42:20 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ int	first_file_parsing(int ac, char *av[])
 	int	fd;
 
 	fd = open(av[1], O_RDONLY);
+	if (fd == -1)
+		perror("open");
 	close (fd);
 	if (ac == 2 && av[1] != NULL)
 	{
 		if (fd == -1)
 		{
-			ft_printf("no such file or directory: %s", av[1]);
 			return (0);
 		}
 		else if (fd > 0)
@@ -46,13 +47,13 @@ int	second_file_parsing(int ac, char *av[])
 {
 	int	fd;
 
-	fd = open(av[4], O_RDONLY);
+	fd = open(av[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
 	close(fd);
 	if (ac == 5)
 	{
 		if (fd == -1)
 		{
-			ft_printf("no such file or directory: %s", av[4]);
+			ft_printf("%s: No such file or directory\n", av[4]);
 			return (0);
 		}
 		else if (fd > 0)
@@ -64,7 +65,7 @@ int	second_file_parsing(int ac, char *av[])
 char	*check_env_for_path(char **env)
 {
 	int		i;
-	
+
 	i = 0;
 	while (env[i] != NULL)
 	{
@@ -87,7 +88,6 @@ char	*check_command_existence(char *av, char **path)
 	str = malloc(i + 2);
 	str[0] = '/';
 	i = 1;
-	// write (1, "Z", 1);
 	while (av[j] != '\0' && av[i - 1] != ' ')
 	{
 		str[i] = av[j];
@@ -95,17 +95,6 @@ char	*check_command_existence(char *av, char **path)
 		i++;
 	}
 	str[i] = '\0';
-	i = 0;
-	while (path[i] != NULL)
-	{
-		join = ft_strjoin(path[i], str);
-		if (access(join, 0) != -1)
-		{
-			return (free(str), join);
-		}
-		i++;
-		free(join);
-	}
-	// write (1, "Z", 1);
-	return (free(join), free(str), NULL);
+	join = check_with_access(path, str);
+	return (join);
 }

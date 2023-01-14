@@ -1,0 +1,25 @@
+// ./pipex '/dev/random' cat "wc" i
+// infinite loop reading from a /dev/random this case my show some fd leak but its okay because it's infinite loop on bash also
+
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+
