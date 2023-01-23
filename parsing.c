@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 17:29:18 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/14 23:03:53 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:33:34 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	parsing(int ac, char *av[])
 	{
 		if (av[2][0] == '\0' || av[3][0] == '\0')
 		{
-			ft_printf(" %s: command not found", av[2]);
-			return (0);
+			return (1);
 		}
 		return (1);
 	}
@@ -42,6 +41,7 @@ int	first_file_parsing(int ac, char *av[])
 	{
 		if (fd == -1)
 		{
+			ft_printf("%s: No such file or directory\n", av[1]);
 			return (0);
 		}
 		else if (fd > 0)

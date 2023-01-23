@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 18:21:26 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/14 23:03:35 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:17:14 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ void	check_flags(char *cmd1, char *cmd2, char **cmd_path, char *av[]);
 void	free_strings(char **str);
 char	**checking_loop(char **sub_path, char *str, char *av[], char **tmp);
 char	*check_with_access(char **path, char *str);
-void	cmd1_redirect(int fd[2], char **cmd_path, char *av[], char **splited_cmd1, char **splited_cmd2);
-void	cmd2_redirect(int fd[2], char **cmd_path, char *av[], char **splited_cmd2, char **splited_cmd1);
+void	cmd1_redirect(int fd[2], char **c_p, char *av[], t_vars *vars);
+void	cmd2_redirect(int fd[2], char **c_p, char *av[], t_vars *vars);
 void	free_tmp(char **tmp);
 char	*backslash_case(char *av, int i);
+void	close_pipe_files(int fd[2]);
 #endif

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:39:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/01/14 23:03:39 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:25:35 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,34 @@ char	*backslash_case(char *av, int i)
 	}
 	join[j] = '\0';
 	return (join);
+}
+
+void	cmd2_redirect(int fd[2], char **c_p, char *av[], t_vars *vars)
+{
+	int		infile;
+	int		outfile;
+
+	infile = open(av[1], O_RDWR);
+	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	dup2(fd[0], STDIN_FILENO);
+	dup2(outfile, STDOUT_FILENO);
+	close(outfile);
+	close(infile);
+	close(fd[0]);
+	close(fd[1]);
+	if (c_p[1])
+	{
+		if (execve(c_p[1], vars->splited_cmd2, 0) == -1)
+			ft_printf("%s: command not found\n", av[3]);
+	}
+	free_tmp(c_p);
+	free_strings(vars->splited_cmd1);
+	free_strings(vars->splited_cmd2);
+	exit(1);
+}
+
+void	close_pipe_files(int fd[2])
+{
+	close(fd[0]);
+	close(fd[1]);
 }
